@@ -26,7 +26,7 @@ defmodule Triton.Mixfile do
 
   defp deps do
     [
-      {:xandra, "~> 0.12"},
+      {:xandra, "~> 0.13"},
       {:vex, "~> 0.6"},
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]

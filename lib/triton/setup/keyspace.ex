@@ -1,12 +1,7 @@
 defmodule Triton.Setup.Keyspace do
   def setup(blueprint) do
     try do
-      node_config =
-        Application.get_env(:triton, :clusters)
-        |> Enum.find(&(&1[:conn] == blueprint.__conn__))
-        |> Keyword.take([:nodes, :authentication])
-
-      node_config = Keyword.put(node_config, :nodes, [node_config[:nodes] |> Enum.random()])
+      node_config = Triton.NodeConfig.node_config(blueprint)
       {:ok, _apps} = Application.ensure_all_started(:xandra)
       {:ok, conn} = Xandra.start_link(node_config)
 
