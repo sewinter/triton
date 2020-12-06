@@ -1,4 +1,18 @@
 defmodule Triton.Setup do
+  # https://hexdocs.pm/xandra/Xandra.html#start_link/1
+  @xandra_start_link_options [
+    :nodes,
+    :compressor,
+    :authentication,
+    :atom_keys,
+    :pool_size,
+    :default_consistency,
+    :protocol_version,
+    :keyspace,
+    :encryption,
+    :transport_options
+  ]
+
   defmacro __before_compile__(_) do
     module = __CALLER__.module
     statements = Module.get_attribute(module, :setup_statements)
@@ -12,7 +26,7 @@ defmodule Triton.Setup do
             node_config =
               Application.get_env(:triton, :clusters)
               |> Enum.find(&(&1[:conn] == block[:__schema__].__keyspace__.__struct__.__conn__))
-              |> Keyword.take([:nodes, :authentication, :keyspace])
+              |> Keyword.take(@xandra_start_link_options)
 
             node_config = Keyword.put(node_config, :nodes, [node_config[:nodes] |> Enum.random()])
 
