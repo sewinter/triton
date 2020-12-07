@@ -10,7 +10,7 @@ defmodule Triton.Setup do
         unquote(Macro.escape(statements))
         |> Enum.each(fn {statement, block} ->
           try do
-            node_config = Triton.NodeConfig.node_config(block)
+            node_config = Triton.NodeConfig.node_config(block[:__schema__].__keyspace__.__struct__.__conn__)
             {:ok, _apps} = Application.ensure_all_started(:xandra)
             {:ok, conn} = Xandra.start_link(node_config)
             Xandra.execute!(conn, "USE #{node_config[:keyspace]};", _params = [])

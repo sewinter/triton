@@ -1,7 +1,7 @@
 defmodule Triton.Setup.MaterializedView do
   def setup(blueprint) do
     try do
-      node_config = Triton.NodeConfig.node_config(blueprint)
+      node_config = Triton.NodeConfig.node_config(Module.concat(blueprint.__from__, Table).__struct__.__keyspace__.__struct__.__conn__)
       {:ok, _apps} = Application.ensure_all_started(:xandra)
       {:ok, conn} = Xandra.start_link(node_config)
 

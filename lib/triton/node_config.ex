@@ -10,12 +10,13 @@ defmodule Triton.NodeConfig do
     :protocol_version,
     :keyspace,
     :encryption,
-    :transport_options
+    :transport_options,
+    :autodiscovered_nodes_port
   ]
 
-  def node_config(block) do
+  def node_config(expected_conn) do
     node_config = Application.get_env(:triton, :clusters)
-    |> Enum.find(&(&1[:conn] == block[:__schema__].__keyspace__.__struct__.__conn__))
+    |> Enum.find(&(&1[:conn] == expected_conn)
     |> Keyword.take(@xandra_start_link_options)
 
     Keyword.put(node_config, :nodes, [node_config[:nodes] |> Enum.random()])
