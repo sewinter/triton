@@ -11,6 +11,8 @@ defmodule Triton.NodeConfig do
     :keyspace,
     :encryption,
     :transport_options,
+    :load_balancing,
+    :autodiscovery,
     :autodiscovered_nodes_port
   ]
 
