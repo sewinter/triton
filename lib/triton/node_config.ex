@@ -18,7 +18,7 @@ defmodule Triton.NodeConfig do
 
   def node_config(expected_conn) do
     node_config = Application.get_env(:triton, :clusters)
-    |> Enum.find(&(&1[:conn] == expected_conn)
+    |> Enum.find(&(&1[:conn] == expected_conn))
     |> Keyword.take(@xandra_start_link_options)
 
     Keyword.put(node_config, :nodes, [node_config[:nodes] |> Enum.random()])
