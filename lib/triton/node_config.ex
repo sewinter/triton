@@ -5,7 +5,6 @@ defmodule Triton.NodeConfig do
     :compressor,
     :authentication,
     :atom_keys,
-    :pool_size,
     :default_consistency,
     :protocol_version,
     :keyspace,
